@@ -8,10 +8,10 @@ const client = redis.createClient(REDIS_PORT);
 
 const { promisify } = require("util");
 const getAsync = promisify(client.get).bind(client);
+getAsync.then(console.log).catch(console.error);
 
 const app = express();
 
-// Set response
 function setResponse(id, count) {
 
     let date = new Date();
@@ -19,7 +19,7 @@ function setResponse(id, count) {
 
     client.incr(id);
 
-    return `${id}: ${invNum}`;
+    return invNum;
 }
 
 async function getInvoiceNumber(req, res, next) {
